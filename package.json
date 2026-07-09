@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "ts-node server/server.ts",
-    "migrate": "ts-node server/config/migrate.ts"
+    "migrate": "ts-node server/config/migrate.ts",
+    "seed": "ts-node server/config/seed.ts"
   },
   "dependencies": {
     "dotenv": "^16.4.5",

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "verimath",
+    "name": "VeriMath",
+    "cap_wallet": "0xc6a4AdCABDA15B3bEecb508B6bE898330b022486",
+    "service_tags": ["Computational Verification"],
+    "price_usdc": 0.01,
+    "store_url": "https://agent.croo.network/agents/10c250b0-c4dd-48de-be0f-5138645e1045",
+    "sla_minutes": 1
+  },
+  {
+    "id": "chainguard",
+    "name": "ChainGuard",
+    "cap_wallet": "0xE91aFDD4e5b14CE4DEe9bE73802a239467386e08",
+    "service_tags": ["Smart Contract Audit", "Token Contract Analyzer", "Gas Optimizer"],
+    "price_usdc": 0.10,
+    "store_url": "https://agent.croo.network/agents/74775115-cf3e-4bb7-bc97-7662b35bb21d",
+    "sla_minutes": 5
+  }
+]
