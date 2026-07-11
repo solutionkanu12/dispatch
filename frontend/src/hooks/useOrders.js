@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { apiUrl } from '../lib/apiUrl.js';
 
 // Real order status values from server/services/orderStore.ts's OrderStatus
 // type / the schema.sql CHECK constraint. 'queued' and 'routed' are the two
@@ -39,7 +40,7 @@ export function useOrders() {
 
   const fetchOnce = useCallback(async () => {
     try {
-      const res = await fetch('/api/orders');
+      const res = await fetch(apiUrl('/api/orders'));
       const body = await res.json();
       if (!mountedRef.current) return;
 

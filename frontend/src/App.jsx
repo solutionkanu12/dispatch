@@ -8,6 +8,7 @@ import Footer from './components/Footer.jsx';
 import { useOrders } from './hooks/useOrders.js';
 import { useDispatch } from './hooks/useDispatch.js';
 import { classifyPreview } from './lib/classifyPreview.js';
+import { apiUrl } from './lib/apiUrl.js';
 import dispatcherImage from './assets/dispatcher.jpg';
 
 let packetSeq = 0;
@@ -32,7 +33,7 @@ export default function App() {
   // so there is no need to poll it.
   useEffect(() => {
     let cancelled = false;
-    fetch('/api/agents')
+    fetch(apiUrl('/api/agents'))
       .then((res) => res.json())
       .then((body) => {
         if (cancelled) return;

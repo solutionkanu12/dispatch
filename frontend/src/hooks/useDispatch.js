@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { apiUrl } from '../lib/apiUrl.js';
 
 /**
  * POST wrapper for /api/dispatch.
@@ -31,7 +32,7 @@ export function useDispatch() {
     setIsSubmitting(true);
     setError(null);
     try {
-      const res = await fetch('/api/dispatch', {
+      const res = await fetch(apiUrl('/api/dispatch'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ request_text: requestText }),
