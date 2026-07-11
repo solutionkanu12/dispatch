@@ -63,7 +63,9 @@ export default function Footer() {
 
         <div className="flex gap-3">
           <a
-            href="#"
+            href="https://github.com/solutionkanu12/dispatch"
+            target="_blank"
+            rel="noopener noreferrer"
             className="social-btn flex h-11 w-11 items-center justify-center rounded-[11px] border border-line2 text-cream2 no-underline"
             aria-label="GitHub"
           >
@@ -72,7 +74,9 @@ export default function Footer() {
             </svg>
           </a>
           <a
-            href="#"
+            href="https://x.com/solution_o1"
+            target="_blank"
+            rel="noopener noreferrer"
             className="social-btn flex h-11 w-11 items-center justify-center rounded-[11px] border border-line2 text-cream2 no-underline"
             aria-label="X"
           >
