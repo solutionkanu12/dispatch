@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import cors from 'cors';
 import express from 'express';
 import { Pool } from 'pg';
 import agentsRouter from './routes/agents';
@@ -6,6 +7,20 @@ import dispatchRouter from './routes/dispatch';
 import ordersRouter from './routes/orders';
 import { setCapService } from './services/capService';
 import { HttpCapService } from './services/httpCapService';
+
+// The deployed frontend (Vercel) and local dev (Vite) origins allowed to call
+// this API cross origin. The frontend builds absolute request URLs against
+// VITE_API_URL in production (see frontend/src/lib/apiUrl.js), which makes
+// every call cross origin from the browser's perspective, so without this the
+// deployed frontend gets CORS errors calling the deployed backend. Local dev
+// normally goes through Vite's own proxy (same origin, no CORS needed), but
+// both localhost and 127.0.0.1 are kept here too for direct/manual testing
+// against the backend without the proxy.
+const ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'https://dispatch-one-beige.vercel.app',
+];
 
 if (!process.env.DATABASE_URL) {
   console.error('DATABASE_URL is not set. Create a .env file based on .env.example.');
@@ -26,6 +41,7 @@ const pool = new Pool({
 });
 
 const app = express();
+app.use(cors({ origin: ALLOWED_ORIGINS }));
 app.use(express.json());
 
 app.use('/api/agents', agentsRouter);
