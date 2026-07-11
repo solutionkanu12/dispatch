@@ -1,9 +1,12 @@
 # Dispatch CAP service dependencies.
 #
-# croo is the CAP SDK already installed and used by scripts/ in this repo. It is
-# listed here without a pinned version because it is installed out of band (the
-# same install the scripts rely on), not from a public index under this name.
-croo
+# The CAP SDK's importable module is named croo, but the actual pip/PyPI
+# distribution is croo-sdk (confirmed via `pip show croo-sdk`, installed at
+# croo_sdk-0.2.1.dist-info; https://github.com/CROO-Network/python-sdk). A
+# bare "croo" in this file resolves to a different, unrelated package on
+# public PyPI and would install silently wrong, so the real distribution name
+# is pinned here instead.
+croo-sdk>=0.2.1
 
 fastapi>=0.110
 uvicorn[standard]>=0.29
