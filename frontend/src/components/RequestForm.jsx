@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 
 /**
  * Request input + submit, matching the prototype's hero form exactly. The

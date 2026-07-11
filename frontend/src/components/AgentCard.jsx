@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { motion } from 'framer-motion';
 
 // Per-agent dot color. The prototype hardcoded two colors for its two

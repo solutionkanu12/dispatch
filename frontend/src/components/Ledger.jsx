@@ -1,3 +1,4 @@
+import React from 'react';
 import LedgerRow from './LedgerRow.jsx';
 
 /**

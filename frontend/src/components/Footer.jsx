@@ -1,3 +1,4 @@
+import React from 'react';
 import crtImage from '../assets/crt.jpg';
 
 function CRT() {
