@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import { Pool } from 'pg';
 import agentsRouter from './routes/agents';
+import dispatchRouter from './routes/dispatch';
+import ordersRouter from './routes/orders';
 
 if (!process.env.DATABASE_URL) {
   console.error('DATABASE_URL is not set. Create a .env file based on .env.example.');
@@ -18,6 +20,8 @@ const app = express();
 app.use(express.json());
 
 app.use('/api/agents', agentsRouter);
+app.use('/api/dispatch', dispatchRouter);
+app.use('/api/orders', ordersRouter);
 
 app.get('/health', async (_req, res) => {
   try {

@@ -1,0 +1,9 @@
+# Dispatch CAP service dependencies.
+#
+# croo is the CAP SDK already installed and used by scripts/ in this repo. It is
+# listed here without a pinned version because it is installed out of band (the
+# same install the scripts rely on), not from a public index under this name.
+croo
+
+fastapi>=0.110
+uvicorn[standard]>=0.29
