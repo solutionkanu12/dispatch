@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html,
+  body {
+    background: #0e0b08;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    color: #f5efe6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #e8913c;
+    color: #1a1511;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #0e0b08;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3d332a;
+    border-radius: 5px;
+    border: 2px solid #0e0b08;
+  }
+}
+
+@layer components {
+  .field-focus {
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .field-focus:focus-within {
+    border-color: #e8913c;
+    box-shadow: 0 0 0 4px rgba(232, 145, 60, 0.14);
+  }
+
+  .btn-press {
+    transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), background 0.2s ease,
+      color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-press:hover {
+    background: #f5efe6 !important;
+    color: #14100c !important;
+    transform: scale(0.955);
+    box-shadow: 0 0 28px rgba(245, 239, 230, 0.28);
+  }
+  .btn-press:active {
+    transform: scale(0.93);
+  }
+
+  .social-btn {
+    transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.3, 1), background 0.2s ease,
+      color 0.2s ease, border-color 0.2s ease;
+  }
+  .social-btn:hover {
+    background: #f5efe6;
+    color: #14100c;
+    border-color: #f5efe6;
+    transform: scale(0.92);
+  }
+  .social-btn:active {
+    transform: scale(0.86);
+  }
+
+  .hero-photo {
+    filter: saturate(0.85) contrast(1.05);
+    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 70% 45%, #000 40%, transparent 78%);
+    mask-image: radial-gradient(ellipse 70% 80% at 70% 45%, #000 40%, transparent 78%);
+  }
+}
