@@ -74,6 +74,31 @@ function usdcBaseUnits(priceUsdc: number): string {
   return String(Math.round(priceUsdc * 10 ** USDC_DECIMALS));
 }
 
+/**
+ * Whether each agent's real CROO service accepts fund_amount/fund_token on
+ * negotiate_order. Confirmed empirically against the real API, not assumed:
+ *
+ *   - chainguard: a real placeOrder call against ChainGuard's real service_id
+ *     (585dbe8a-af77-4628-a8f3-3f7372ce07da) returned INVALID_PARAMETERS
+ *     "fund_amount/fund_token must be empty for non-fund services" when these
+ *     fields were sent. Its service is flat priced (non-fund), so they must
+ *     be omitted.
+ *   - verimath: the same call against VeriMath's real service_id
+ *     (dca698b0-9d66-4aff-844d-f77d535dc519) passed parameter validation with
+ *     these fields present (it failed later for an unrelated reason,
+ *     PROVIDER_NOT_ACCEPTING_ORDERS), so they continue to be sent.
+ *
+ * There is no SDK call to look this up per service at runtime (croo's
+ * AgentClient has no marketplace/service metadata query), so this is fixed
+ * per agent rather than derived. If a service's real behavior is ever found
+ * to differ from what is recorded here, update this map from new evidence
+ * rather than guessing.
+ */
+const REQUIRES_FUND_TRANSFER: Partial<Record<AgentId, boolean>> = {
+  verimath: true,
+  chainguard: false,
+};
+
 interface CapServiceResponse {
   status: number;
   body: unknown;
@@ -126,17 +151,18 @@ export class HttpCapService implements CapService {
     // succeeding.
     const requirements = JSON.stringify({ text: input.requestText });
 
+    const requestBody: Record<string, string> = { service_id: serviceId, requirements };
+    if (REQUIRES_FUND_TRANSFER[input.agentId]) {
+      requestBody.fund_amount = usdcBaseUnits(input.priceUsdc);
+      requestBody.fund_token = USDC_BASE_TOKEN;
+    }
+
     const { status, body } = await callCapService(
       '/orders/place',
       {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({
-          service_id: serviceId,
-          requirements,
-          fund_amount: usdcBaseUnits(input.priceUsdc),
-          fund_token: USDC_BASE_TOKEN,
-        }),
+        body: JSON.stringify(requestBody),
       },
       PLACE_TIMEOUT_MS
     );
