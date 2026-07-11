@@ -16,5 +16,14 @@
     "price_usdc": 0.10,
     "store_url": "https://agent.croo.network/agents/74775115-cf3e-4bb7-bc97-7662b35bb21d",
     "sla_minutes": 5
+  },
+  {
+    "id": "polymarket",
+    "name": "Polymarket",
+    "cap_wallet": "0x9Ac9fD9Dca5f64926BAD16f5942F93db5ce5dCFE",
+    "service_tags": ["Wallet Intelligence", "Prediction Market Analytics"],
+    "price_usdc": 0.10,
+    "store_url": null,
+    "sla_minutes": null
   }
 ]
