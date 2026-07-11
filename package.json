@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "ts-node server/server.ts",
+    "build": "tsc && cp server/config/schema.sql server/config/agents.json dist/config/",
+    "start": "node dist/server.js",
     "migrate": "ts-node server/config/migrate.ts",
     "seed": "ts-node server/config/seed.ts",
     "test": "node --require ts-node/register --test server/services/capClient.order.test.ts server/routes/dispatch.flow.test.ts"
