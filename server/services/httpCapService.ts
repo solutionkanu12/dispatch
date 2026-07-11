@@ -76,26 +76,33 @@ function usdcBaseUnits(priceUsdc: number): string {
 
 /**
  * Whether each agent's real CROO service accepts fund_amount/fund_token on
- * negotiate_order. Confirmed empirically against the real API, not assumed:
+ * negotiate_order. Confirmed empirically against the real API, not assumed.
+ * This has changed once already for verimath (see below), so it is a live
+ * reading of that service's current configuration on CROO's side, not a
+ * fixed property of the service itself -- if either agent's real behavior is
+ * ever found to differ from what is recorded here, update this map from new
+ * evidence rather than guessing.
  *
  *   - chainguard: a real placeOrder call against ChainGuard's real service_id
  *     (585dbe8a-af77-4628-a8f3-3f7372ce07da) returned INVALID_PARAMETERS
  *     "fund_amount/fund_token must be empty for non-fund services" when these
  *     fields were sent. Its service is flat priced (non-fund), so they must
  *     be omitted.
- *   - verimath: the same call against VeriMath's real service_id
+ *   - verimath: earlier the same call against VeriMath's real service_id
  *     (dca698b0-9d66-4aff-844d-f77d535dc519) passed parameter validation with
  *     these fields present (it failed later for an unrelated reason,
- *     PROVIDER_NOT_ACCEPTING_ORDERS), so they continue to be sent.
+ *     PROVIDER_NOT_ACCEPTING_ORDERS). A later retry with the identical
+ *     service_id and code returned the same INVALID_PARAMETERS "non-fund
+ *     services" error ChainGuard gets, both on the deployed backend and
+ *     reproduced locally, so VeriMath's real service was reconfigured to
+ *     non-fund on CROO's side in between; this is now set to match.
  *
  * There is no SDK call to look this up per service at runtime (croo's
  * AgentClient has no marketplace/service metadata query), so this is fixed
- * per agent rather than derived. If a service's real behavior is ever found
- * to differ from what is recorded here, update this map from new evidence
- * rather than guessing.
+ * per agent rather than derived.
  */
 const REQUIRES_FUND_TRANSFER: Partial<Record<AgentId, boolean>> = {
-  verimath: true,
+  verimath: false,
   chainguard: false,
 };
 
