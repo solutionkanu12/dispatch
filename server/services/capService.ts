@@ -1,24 +1,19 @@
 /**
  * CAP service port: the seam between the HTTP layer and the real CAP network.
  *
- * IMPORTANT DISCREPANCY (flagged, not silently papered over):
  * docs/dispatch-architecture.md section 3 and docs/dispatch-tasks.md Tasks 6
- * and 7 assume a TypeScript `capClient.placeOrder(...)` and
- * `capClient.getOrderStatus(...)` that call the CAP SDK directly. Those network
- * wrappers were never built in TypeScript. What exists in capClient.ts is only
- * pure decision logic (assessOrder, pollOrderUntilSettled, assessNegotiation,
- * toFailureReason) with no network calls. The actual CAP SDK in this repo is
- * Python (the croo package, exercised by scripts/*.py); there is no Node to
- * Python bridge yet.
- *
- * So placing a real on chain order from Node is not something the repo can do
- * today, and inventing that behavior here would mean fabricating CAP SDK calls
- * and field names, which we must not do. Instead this module defines the narrow
- * port the routes depend on and leaves the concrete implementation as an
- * injected dependency. The real CAP integration (the missing Task 6 and Task 7
- * network layer, or a Node to Python bridge) must call setCapService() at
- * startup to make dispatch fully live. Until then placement fails cleanly with
- * a clear reason rather than pretending to succeed.
+ * and 7 assume a TypeScript `capClient.placeOrder(...)` that calls the CAP SDK
+ * directly. That was never built, because the only proven CAP SDK in this repo
+ * is Python (the croo package, exercised by scripts/*.py) -- there is no
+ * TypeScript CAP SDK to wrap directly. Instead this module defines the narrow
+ * port the routes depend on, and the concrete implementation
+ * (HttpCapService, in server/services/httpCapService.ts) satisfies it by
+ * calling the running cap-service FastAPI process (cap-service/main.py) over
+ * HTTP, which in turn is the one that holds the real croo SDK client.
+ * server/server.ts registers that implementation via setCapService() at
+ * startup. If cap-service is unreachable or misconfigured (wrong
+ * CAP_SERVICE_URL, missing CROO_*_SERVICE_ID), placement fails cleanly with a
+ * clear reason rather than pretending to succeed -- see httpCapService.ts.
  *
  * The port deliberately reuses OrderPollClient from capClient.ts (its get_order
  * method name was verified against the real croo AgentClient) so the same
@@ -28,10 +23,15 @@
 import { OrderPollClient } from './capClient';
 import { AgentId } from './classifier';
 
-/** Input to a placement: which provider to hire and the request to fulfil. */
+/**
+ * Input to a placement: which provider to hire, the request to fulfil, and
+ * the provider's USDC price (from the seeded agents table, looked up by the
+ * caller) so the order can be funded for that exact amount.
+ */
 export interface PlaceOrderInput {
   agentId: AgentId;
   requestText: string;
+  priceUsdc: number;
 }
 
 /**

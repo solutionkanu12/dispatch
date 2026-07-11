@@ -119,6 +119,7 @@ router.post('/', dispatchLimiter, async (req, res) => {
       const { capOrderRef } = await getCapService().placeOrder({
         agentId,
         requestText,
+        priceUsdc,
       });
       await markRouted(draft.id, capOrderRef);
 

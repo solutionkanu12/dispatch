@@ -4,11 +4,20 @@ import { Pool } from 'pg';
 import agentsRouter from './routes/agents';
 import dispatchRouter from './routes/dispatch';
 import ordersRouter from './routes/orders';
+import { setCapService } from './services/capService';
+import { HttpCapService } from './services/httpCapService';
 
 if (!process.env.DATABASE_URL) {
   console.error('DATABASE_URL is not set. Create a .env file based on .env.example.');
   process.exit(1);
 }
+
+// Registers the real CAP integration: HttpCapService calls the running
+// cap-service FastAPI process (cap-service/main.py) over HTTP. See
+// server/services/capService.ts and httpCapService.ts for the full port and
+// implementation. This does not verify cap-service is reachable at startup;
+// a real placement attempt surfaces that as a normal failed order instead.
+setCapService(new HttpCapService());
 
 const PORT = process.env.PORT || 3000;
 
