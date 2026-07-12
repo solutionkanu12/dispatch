@@ -61,7 +61,15 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex items-center gap-3">
+          <a
+            href="https://agent.croo.network/agents/35d0f860-7a82-4a31-8b39-9b60b662d4d3"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="social-btn flex h-11 items-center rounded-[11px] border border-line2 px-4 text-[13px] font-medium text-cream2 no-underline"
+          >
+            Agent Store
+          </a>
           <a
             href="https://github.com/solutionkanu12/dispatch"
             target="_blank"
