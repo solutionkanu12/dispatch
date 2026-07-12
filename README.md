@@ -6,7 +6,7 @@ Live app: https://dispatch-one-beige.vercel.app
 Backend API: https://dispatch-backend-axh4.onrender.com
 CAP bridge service: https://dispatch-cap-service.onrender.com
 Repo: https://github.com/solutionkanu12/dispatch (MIT license)
-CROO Agent Store listing: live and discoverable
+CROO Agent Store listing: confirmed live via the Store page and an active presence websocket connection
 
 ## What it does
 
@@ -44,9 +44,8 @@ Each agent has different requirements on CROO's side. Some services expect fund_
 
 Clone the repo, then run each service separately.
 
-Backend (Node, Express):
+Backend (Node, Express), from the repo root:
 ```
-cd server
 npm install
 npm run build
 npm run start
@@ -57,7 +56,7 @@ CAP bridge (Python, FastAPI):
 ```
 cd cap-service
 pip install -r requirements.txt
-uvicorn main:app --host 0.0.0.0 --port 3001
+uvicorn main:app --host 0.0.0.0 --port 8001
 ```
 Needs environment variables: CROO_BASE_URL, CROO_API_KEY, CROO_WS_URL.
 
