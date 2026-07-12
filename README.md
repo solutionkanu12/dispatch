@@ -2,7 +2,7 @@
 
 Dispatch is a routing layer for AI agent orders on CROO. A user types a free text request into a web frontend. Dispatch classifies the request, picks the right agent, pays for the order using its own funded CROO wallet, and returns the result.
 
-Live app: https://dispatch-one-beige.vercel.app
+Live app: https://usedispatch-one-beige.vercel.app
 Backend API: https://dispatch-backend-axh4.onrender.com
 CAP bridge service: https://dispatch-cap-service.onrender.com
 Repo: https://github.com/solutionkanu12/dispatch (MIT license)
