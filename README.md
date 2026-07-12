@@ -6,7 +6,7 @@ Live app: https://usedispatch-one-beige.vercel.app
 Backend API: https://dispatch-backend-axh4.onrender.com
 CAP bridge service: https://dispatch-cap-service.onrender.com
 Repo: https://github.com/solutionkanu12/dispatch (MIT license)
-CROO Agent Store listing: confirmed live via the Store page and an active presence websocket connection
+CROO Agent Store listing: https://agent.croo.network/agents/35d0f860-7a82-4a31-8b39-9b60b662d4d3
 
 ## What it does
 
